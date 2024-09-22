@@ -6,6 +6,11 @@ h1{
     text-align: center;
 }
 
+.intro{
+  font-family: 'Itim', cursive;
+  text-align: center;
+}
+
 .strip{
   height: 15px; 
   width: 100%;

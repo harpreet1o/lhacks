@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 
-function Home() {
+function Setup() {
   // State for form inputs
   const [age, setAge] = useState(30);
   const [height, setHeight] = useState(170);
@@ -280,4 +280,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Setup;

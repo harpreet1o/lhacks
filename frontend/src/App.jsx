@@ -1,12 +1,13 @@
 import './App.css'
-import Login from './pages/Login'
+import Home from './pages/Home'
 import Setup from './pages/Setup'
+import Workout from './pages/Workout'
 
 function App() {
 
   return (
     <div className="border border-success p-4">
-     <Setup />
+     <Home />
     </div>
   )
 }
