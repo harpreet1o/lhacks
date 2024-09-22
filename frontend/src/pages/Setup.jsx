@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import axios from "axios"; // Import axios
+import { useState, useContext } from "react";
+import axios from "axios"; 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UserContext } from "../context/UserContext";
+import decor from '../assets/nathan-dumlao-NXMZxygMw8o-unsplash.jpg';
+
 
 function Setup() {
   const [age, setAge] = useState(30);
@@ -10,39 +12,10 @@ function Setup() {
   const [weight, setWeight] = useState(70);
   const [goal, setGoal] = useState("general_fitness");
   const [gender, setGender] = useState("");
-  const [days, setDays] = useState({
-    Monday: false,
-    Tuesday: false,
-    Wednesday: false,
-    Thursday: false,
-    Friday: false,
-    Saturday: false,
-    Sunday: false,
-    Weekdays: false,
-  });
+  const [workoutFrequency, setWorkoutFrequency] = useState("");
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-
-  // Handle availability checkboxes
-  const handleDayChange = (day) => {
-    if (day === "Weekdays") {
-      setDays((prev) => ({
-        Monday: !prev.Weekdays,
-        Tuesday: !prev.Weekdays,
-        Wednesday: !prev.Weekdays,
-        Thursday: !prev.Weekdays,
-        Friday: !prev.Weekdays,
-        Saturday: false,
-        Sunday: false,
-        Weekdays: !prev.Weekdays,
-      }));
-    } else {
-      setDays((prev) => ({
-        ...prev,
-        [day]: !prev[day],
-      }));
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const { user } = useContext(UserContext);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -54,14 +27,14 @@ function Setup() {
       weight,
       gender,
       goal,
-      availability: Object.keys(days).filter(day => days[day]), // Get available days
+      workoutFrequency,
     };
 
     try {
       const response = await axios.post("http://localhost:3000/userSelection", formData, {
         withCredentials: true,
       });
-      console.log("Workout Plan:", response.data); // Handle response as needed
+      console.log("Workout Plan:", response.data);
     } catch (error) {
       console.error("Error fetching workout plan:", error);
     }
@@ -80,11 +53,31 @@ function Setup() {
   return (
     <>
       <Header />
-      <div className="container-fluid text-center mb-4">
-        <h3>Profile Set-up</h3>
+
+      {!user && (
+      <div className="alert alert-danger text-center py-1 mt-2" role="alert">
+        You are not logged in. Your workout will not be saved.
       </div>
+    )}
 
       <div className="container-fluid">
+        <div className="row">
+            {/* Image for larger screens */}
+            <div className="col-lg-4 d-none d-lg-block">
+              <div className="image-container">
+                <img
+                  src={decor}
+                  alt="Decorative image of a personal trainer helping a man at gym."
+                  className="img-fluid"
+                />
+              </div>
+            </div>
+
+        {/* Form Section */}
+        <div className="col-lg-8">
+          <div className="container text-center mb-4">
+            <h3>Profile Set-up</h3>
+          </div>
         <form className="d-flex flex-column" onSubmit={handleSubmit}>
           {/* Gender Field */}
           <div className="mb-3">
@@ -92,10 +85,10 @@ function Setup() {
               Gender
             </label>
             <select
-              className="form-control"
+              className="form-select"
               id="gender"
               value={gender}
-              onChange={(e) => setGender(e.target.value)} // Update gender state
+              onChange={(e) => setGender(e.target.value)} 
             >
               <option value="" disabled>
                 Select your gender
@@ -103,11 +96,9 @@ function Setup() {
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="other">Other</option>
-              <option value="prefer_not_to_say">Prefer not to say</option>
             </select>
           </div>
 
-          {/* Age Range Slider */}
           <div className="mb-3">
             <label htmlFor="age" className="form-label">
               Age: {age}
@@ -123,7 +114,6 @@ function Setup() {
             />
           </div>
 
-          {/* Height Range Slider */}
           <div className="mb-3">
             <label htmlFor="height" className="form-label">
               Height: {height} cm
@@ -139,7 +129,6 @@ function Setup() {
             />
           </div>
 
-          {/* Weight Range Slider */}
           <div className="mb-3">
             <label htmlFor="weight" className="form-label">
               Weight: {weight} kg
@@ -155,7 +144,6 @@ function Setup() {
             />
           </div>
 
-          {/* Goal Section */}
           <div className="mb-3">
             <label htmlFor="goal" className="form-label">Goal</label>
             <select
@@ -173,27 +161,23 @@ function Setup() {
             </select>
           </div>
 
-          {/* Availability Checkboxes */}
-          <div className="mb-3">
-            <label className="form-label">Availability:</label>
-            <div className="row">
-              {Object.keys(days).map((day) => (
-                <div className="col-6" key={day}>
-                  <div className="form-check d-flex align-items-center">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id={day}
-                      checked={days[day]}
-                      onChange={() => handleDayChange(day)}
-                    />
-                    <label className="form-check-label ms-2" htmlFor={day}>
-                      {day}
-                    </label>
-                  </div>
-                </div>
-              ))}
-            </div>
+{/* Workout Frequency Dropdown */}
+<div className="mb-3">
+            <label htmlFor="workoutFrequency" className="form-label">How often do you want to work out?</label>
+            <select
+              className="form-select"
+              id="workoutFrequency"
+              value={workoutFrequency}
+              onChange={(e) => setWorkoutFrequency(e.target.value)}
+            >
+              <option value="" disabled>Select frequency</option>
+              <option value="once">Once a week</option>
+              <option value="twice">Twice a week</option>
+              <option value="three_times">3x a week</option>
+              <option value="four_times">4x a week</option>
+              <option value="five_times">5x a week</option>
+              <option value="six_times">6x a week</option>
+            </select>
           </div>
 
           {/* Terms and Conditions */}
@@ -206,9 +190,9 @@ function Setup() {
               onChange={() => setTermsAccepted(!termsAccepted)}
             />
             <label className="form-check-label" htmlFor="termsCheck">
-              I accept the terms{" "}
-              <a href="#" className="text-decoration-underline" onClick={openModal}>
-                Read our T&Cs
+              I accept the terms and conditions {" "}
+              <a href="#" className="text-info text-decoration-underline" onClick={openModal}>
+                [ Read our T&Cs ]
               </a>
             </label>
           </div>
@@ -220,12 +204,14 @@ function Setup() {
               className="btn btn-success btn-lg"
               disabled={!termsAccepted}
             >
-              Review and Generate Plan
+              Generate Plan
             </button>
           </div>
         </form>
-        <Footer />
+        </div>
+        </div>
       </div>
+        <Footer />
 
       {/* Modal for Terms & Conditions */}
       {isModalOpen && (

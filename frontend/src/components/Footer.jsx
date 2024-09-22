@@ -1,8 +1,8 @@
 const Footer = () => {
   return (
-    <footer className="mt-5 p-1 text-center fixed-bottom">
+    <footer className=" bg-white mt-5 p-1 text-center fixed-bottom">
       <div className="bg-success mt-20 p-0 strip"></div>
-      <div className="container">
+      <div className=" bg-white container">
         <div className="row">
           <div className="col-md-12 text-secondary mb-0 pb-0">
             <p className="mb-0 ">&copy; {new Date().getFullYear()} &nbsp;&nbsp;
