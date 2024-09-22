@@ -1,23 +1,22 @@
 import Header from "../components/Header";
+import ExerciseCard from "../components/Exercise";
 
 function Workout() {
   return (
     <div className="">
       <Header />
+      <div className="container-fluid text-center mb-4">
+        <h3>Workout</h3>
 
-      <div class="container">
-        <h1>Workout</h1>
-        <p class="highlight">Great job! 🎉</p>
-        <p class="date">Date: [Insert Date]</p>
-        <p class="time">Total Time: [Total Time]</p>
+        <p className="date">Date: [Insert Date]</p>
+        <p className="time">Total Time: [Total Time]</p>
 
         <p>Exercises Completed:</p>
-        <div class="exercises">
-            <p>Push-ups: 3x10</p>
-            <p>Squats: 3x15</p>
-            <p>Plank: 3x30s</p>
+        <div className="exercises">
+        <ExerciseCard name="Push-ups" rep="10" series="3" />
+
         </div>
-    </div>
+      </div>
     </div>
   );
 }
