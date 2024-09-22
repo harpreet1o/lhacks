@@ -12,17 +12,13 @@ function Home() {
     }
   });
   console.log(workout);
+  
   const generate=(async()=>{
     await axios.post("http://localhost:3000/gettingWorkout", {}, { withCredentials: true });
   })
 
   const navigate = useNavigate(); 
 
-  const { fetchUser,user } = useContext(UserContext);
-  useEffect(()=>{
-    if(!user)
-  fetchUser();
-  })
 
   return (
     <div className="intro ">
