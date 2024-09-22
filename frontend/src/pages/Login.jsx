@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -29,7 +30,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container">
       <Header />
       <h2 className='text-success mt-4'>Login</h2>
       {error && <div className="alert alert-danger">{error}</div>}
@@ -42,8 +43,14 @@ const Login = () => {
           <label htmlFor="password" className="form-label mt-3">Password</label>
           <input type="password" name="password" className="form-control" onChange={onChange} required />
         </div>
+
+        <div className='my-3'>
+          <a href="/signup" className='text-secondary fst-italic'>Don&apos;t have an account? Sign-up here! </a>
+        </div>
+
         <button type="submit" className="btn btn-success mt-3">Login</button>
       </form>
+      <Footer />
     </div>
   );
 };

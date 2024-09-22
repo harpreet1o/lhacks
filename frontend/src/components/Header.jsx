@@ -2,9 +2,9 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
-//import { set } from "mongoose";
 import logo from "../assets/logo.svg";
 import settingsIcon from "../assets/gear.svg";
+import dumbbellIcon from "../assets/dumbbell.svg";
 
 const Header = () => {
   const navigate = useNavigate(); 
@@ -23,12 +23,6 @@ const Header = () => {
       navigate('/login');
     }
   };
-  const handleNavigation = () => {
-    navigate('/setup'); // Use quotes for the path
-};
-const handleFront = () => {
-  navigate('/'); // Use quotes for the path
-};
 
   useEffect(() => {
     if (user) {
@@ -41,22 +35,32 @@ const handleFront = () => {
   }, [user]);
 
   return (
-    <div>
+    <div id="header">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <a className="px-2" onClick={handleNavigation}> 
+        <div className="px-2 d-flex">
+        <a onClick={() => navigate('/setup')}> 
           <img src={settingsIcon} alt="Settings icon" className=" img-fluid icon" />
         </a>
-        <h1 className="fw-bold text-success" onClick={handleFront}>
-          <img src={logo} alt="Running person icon" className="px-2" />
-          Easy Fit
-        </h1>
-        {(user)?<p>Hi, {user}</p>:<></>}
+        <p>&nbsp;&nbsp;</p>
+        <a onClick={() => navigate('/workout')}> 
+          <img src={dumbbellIcon} alt="Dumbbell icon" className=" img-fluid icon" />
+        </a>
+        </div>
+        <a onClick={() => navigate('/')}>
+          <h1 className="fw-bold text-success" >
+            <img src={logo} alt="Running person icon" className="px-2" />
+            Easy Fit
+          </h1>
+        </a>
         
         <button className={"btn " + btnColor} onClick={handleClick}>
           {btnText}
         </button>
+
       </div>
+
       <div className="bg-success mt-20 p-0 strip"></div>
+
     </div>
 
   );

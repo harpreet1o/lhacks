@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from '../components/Footer';
 import ExerciseCard from "../components/Exercise";
 import { UserContext } from "../context/UserContext";
 import { useEffect, useState,useContext } from "react";
@@ -23,6 +24,7 @@ function Workout() {
 
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

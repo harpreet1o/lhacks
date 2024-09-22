@@ -16,9 +16,12 @@ h1{
   width: 100%;
 }
 
+#header{
+  width: 100%;
+}
+
 #root {
-  max-width: 100%;
-  min-width: 800px;
+  min-width: 400px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
