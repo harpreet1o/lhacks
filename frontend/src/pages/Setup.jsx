@@ -1,15 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios"; // Import axios
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 function Setup() {
-  // State for form inputs
   const [age, setAge] = useState(30);
   const [height, setHeight] = useState(170);
   const [weight, setWeight] = useState(70);
   const [goal, setGoal] = useState("general_fitness");
-  const [gender, setGender] = useState(""); // State for gender
+  const [gender, setGender] = useState("");
   const [days, setDays] = useState({
     Monday: false,
     Tuesday: false,
@@ -21,6 +20,7 @@ function Setup() {
     Weekdays: false,
   });
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
 
   // Handle availability checkboxes
   const handleDayChange = (day) => {
@@ -47,7 +47,6 @@ function Setup() {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
 
-    // Create an object for the values
     const formData = {
       age,
       height,
@@ -58,7 +57,6 @@ function Setup() {
     };
 
     try {
-      // Call the API with the form data
       const response = await axios.post("http://localhost:3000/userSelection", formData, {
         withCredentials: true,
       });
@@ -66,6 +64,16 @@ function Setup() {
     } catch (error) {
       console.error("Error fetching workout plan:", error);
     }
+  };
+
+  // Modal Handlers
+  const openModal = (e) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -198,7 +206,7 @@ function Setup() {
             />
             <label className="form-check-label" htmlFor="termsCheck">
               I accept the terms{" "}
-              <a href="#" className="text-decoration-underline">
+              <a href="#" className="text-decoration-underline" onClick={openModal}>
                 Read our T&Cs
               </a>
             </label>
@@ -217,8 +225,46 @@ function Setup() {
         </form>
         <Footer />
       </div>
+
+      {/* Modal for Terms & Conditions */}
+      {isModalOpen && (
+        <div className="modal" style={modalStyle}>
+          <div className="modal-content" style={modalContentStyle}>
+            <h2>Terms & Conditions</h2>
+            <p>
+              By using EasyFit, you agree that you are responsible for your own health.
+              Consult a healthcare provider before starting any workouts. EasyFit is not liable 
+              for any injuries or health issues arising from the use of its services.
+            </p>
+            <div className="modal-actions">
+              <button className="btn btn-secondary" onClick={closeModal}>Close</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
+
+// Simple styles for the modal
+const modalStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const modalContentStyle = {
+  backgroundColor: "white",
+  padding: "20px",
+  borderRadius: "10px",
+  width: "500px",
+  textAlign: "center",
+};
 
 export default Setup;
