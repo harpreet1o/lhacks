@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -27,18 +28,19 @@ const Login = () => {
 
   return (
     <div className="container mt-5">
-      <h2>Login</h2>
+      <Header />
+      <h2 className='text-success mt-4'>Login</h2>
       {error && <div className="alert alert-danger">{error}</div>}
-      <form onSubmit={onSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email</label>
-          <input type="email" name="email" className="form-control" onChange={onChange} required />
+      <form onSubmit={onSubmit}  className='fw-semibold '>
+        <div>
+          <label htmlFor="email" className="form-label mt-3">Email</label>
+          <input type="email" name="email" className="form-control" onChange={onChange} placeholder='johndoe@gmail.com' required />
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
+        <div>
+          <label htmlFor="password" className="form-label mt-3">Password</label>
           <input type="password" name="password" className="form-control" onChange={onChange} required />
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn btn-success mt-3">Login</button>
       </form>
     </div>
   );

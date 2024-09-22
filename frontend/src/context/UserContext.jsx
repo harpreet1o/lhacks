@@ -1,8 +1,9 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 const UserContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
@@ -23,8 +24,26 @@ const UserProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+  const login = async (userData) => {
+    setUser(userData);
+    try {
+      await axios.post("http://localhost:3000/api/google-login", userData, { withCredentials: true });
+    } catch (error) {
+      console.error("Error setting user session:", error);
+    }
+  };
+
+  const logout = async () => {
+    setUser(null);
+    try {
+      await axios.post("http://localhost:3000/api/logout", {}, { withCredentials: true });
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, login, logout }}>
       {children}
     </UserContext.Provider>
   );

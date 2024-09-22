@@ -1,4 +1,5 @@
-import React from 'react';
+// This will be deleted, saved for reference only
+
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
