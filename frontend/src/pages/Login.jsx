@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -44,6 +45,7 @@ const Login = () => {
         </div>
         <button type="submit" className="btn btn-success mt-3">Login</button>
       </form>
+      <Footer />
     </div>
   );
 };

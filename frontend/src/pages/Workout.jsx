@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from '../components/Footer';
 import ExerciseCard from "../components/Exercise";
 
 function Workout() {
@@ -17,6 +18,7 @@ function Workout() {
 
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

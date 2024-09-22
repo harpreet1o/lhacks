@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios"; // Import axios
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 function Setup() {
   // State for form inputs
@@ -214,6 +215,7 @@ function Setup() {
             </button>
           </div>
         </form>
+        <Footer />
       </div>
     </>
   );

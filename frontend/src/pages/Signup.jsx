@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -56,6 +57,7 @@ const Signup = () => {
         <button type="submit" className="btn btn-success ">Sign up</button>
       
       </form>
+      <Footer />
     </div>
   );
 };

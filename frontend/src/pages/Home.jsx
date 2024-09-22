@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import { useContext, useEffect } from "react";
 import { UserContext } from '../context/UserContext';
 import axios from "axios";
@@ -34,6 +35,7 @@ function Home() {
       >Get started</button> 
 
       <span id="to">to build your perfect workout</span>
+      <Footer />
     </div>
     );
 }
