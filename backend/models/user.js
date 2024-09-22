@@ -19,31 +19,88 @@ const userSchema = new mongoose.Schema({
 
 // Create the User model
 const User = mongoose.model('User', userSchema);
+const userSelectionSchema = new mongoose.Schema({
+    age: { type: Number, required: true },
+    height: { type: Number, required: true },
+    weight: { type: Number, required: true },
+    gender: { type: String, required: true },
+    goal: { type: String, required: true },
+    availability: { type: [String], required: true }, // Array of available days
+    createdAt: { type: Date, default: Date.now },
+    userId:{type:String,required:true}
+  });
+  
+  const UserSelection = mongoose.model('UserSelection', userSelectionSchema);
+  const userselectio=(async(userId)=>{await UserSelection.findOne({ userId })})
+  
+  const createOrUpdateUserSelection = async ({ age, height, weight, gender, goal, availability, userId }) => {
+        // Check if a user selection already exists for the given userId
+        const existingSelection = await UserSelection.findOne({ userId });
 
-// Function to find a user by email
-const findUserByEmail = async (email, cb) => {
-    try {
-        const user = await User.findOne({ email });
-        cb(null, user);
-    } catch (err) {
-        cb(err, null);
-    }
+        if (existingSelection) {
+            // Update existing user selection
+            const updatedSelection = await UserSelection.findByIdAndUpdate(
+                existingSelection._id,
+                { age, height, weight, gender, goal, availability },
+                { new: true, runValidators: true } // Return the updated document
+            );
+
+            return "success";
+        } else {
+            // Create new user selection
+            const newUserSelection = new UserSelection({
+                age,
+                height,
+                weight,
+                gender,
+                goal,
+                availability,
+                userId // Associate with user ID
+            });
+
+            const savedSelection = await newUserSelection.save();
+            return "success";
+
+        }
 };
 
+
+
+// Function to find a user by email
+const findUserByEmail = async (email) => {
+     
+        const user = await User.findOne({ email });
+        if(user)
+        return user;
+        else
+        return null;
+};
+
+const findById = async (id) => {    
+    const user = await User.findById(id); 
+    if(user)
+    return user;
+    else
+    return null;
+};
 // Function to create a new user
-const createUser = async ({ name, email, password }, cb) => {
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(password, salt); // Use the correct variable
-    const newUser = new User({ name, email, password: hashedPassword }); // Store hashed password
+const createUser = async ({ name, email, password }) => {
     try {
-        await newUser.save();
-        cb(null, { name, email }); // Return relevant user data
+        const salt = await  bcrypt.genSalt(10); 
+        console.log(password);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({ name, email, password: hashedPassword }); 
+
+        await newUser.save(); 
+        return newUser;
     } catch (err) {
-        cb(err, null);
+        // You can add more specific error logging here if needed
+        throw new Error(`Error creating user: ${err.message}`);
     }
 };
 
 // Function to compare passwords
 const matchPassword = (password, hash) => bcrypt.compareSync(password, hash);
 
-export { createUser, findUserByEmail, matchPassword };
+export { createUser, findUserByEmail, matchPassword,findById,createOrUpdateUserSelection,userselectio };

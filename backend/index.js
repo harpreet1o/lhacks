@@ -3,6 +3,7 @@ import cors from "cors";
 import logger from "morgan";
 import indexRouter from "./routes/workout.js";
 import authRoutes from './routes/auth1.js';
+import cookieParser from "cookie-parser";
 import 'dotenv/config';
 
 
@@ -15,6 +16,7 @@ const corsOptions = {
   app.use(cors(corsOptions));
 app.use(express.json());
 app.use(logger("dev"));
+app.use(cookieParser());
 // app.use('/', authRoutes);
 app.get("/",(req,res)=>{
     console.log(process.env.GOOGLE_CLIENT_SECRET);
