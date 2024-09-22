@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios"; // Import axios
 import Header from "../components/Header";
 
 function Setup() {
@@ -7,6 +8,7 @@ function Setup() {
   const [height, setHeight] = useState(170);
   const [weight, setWeight] = useState(70);
   const [goal, setGoal] = useState("general_fitness");
+  const [gender, setGender] = useState(""); // State for gender
   const [days, setDays] = useState({
     Monday: false,
     Tuesday: false,
@@ -40,6 +42,31 @@ function Setup() {
     }
   };
 
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+
+    // Create an object for the values
+    const formData = {
+      age,
+      height,
+      weight,
+      gender,
+      goal,
+      availability: Object.keys(days).filter(day => days[day]), // Get available days
+    };
+
+    try {
+      // Call the API with the form data
+      const response = await axios.post("http://localhost:3000/userSelection", formData, {
+        withCredentials: true,
+      });
+      console.log("Workout Plan:", response.data); // Handle response as needed
+    } catch (error) {
+      console.error("Error fetching workout plan:", error);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -48,18 +75,26 @@ function Setup() {
       </div>
 
       <div className="container-fluid">
-        <form className="d-flex flex-column">
-          {/* Name Field */}
+        <form className="d-flex flex-column" onSubmit={handleSubmit}>
+          {/* Gender Field */}
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
+            <label htmlFor="gender" className="form-label">
+              Gender
             </label>
-            <input
-              type="text"
+            <select
               className="form-control"
-              id="name"
-              placeholder="Enter your name"
-            />
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)} // Update gender state
+            >
+              <option value="" disabled>
+                Select your gender
+              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+              <option value="prefer_not_to_say">Prefer not to say</option>
+            </select>
           </div>
 
           {/* Age Range Slider */}
@@ -128,122 +163,26 @@ function Setup() {
             </select>
           </div>
 
-          {/* Availability Checkboxes in 2x4 Grid */}
+          {/* Availability Checkboxes */}
           <div className="mb-3">
             <label className="form-label">Availability:</label>
             <div className="row">
-              <div className="col-6">
-                <div className="form-check d-flex align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Monday"
-                    checked={days.Monday}
-                    onChange={() => handleDayChange("Monday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Monday">
-                    Monday
-                  </label>
+              {Object.keys(days).map((day) => (
+                <div className="col-6" key={day}>
+                  <div className="form-check d-flex align-items-center">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id={day}
+                      checked={days[day]}
+                      onChange={() => handleDayChange(day)}
+                    />
+                    <label className="form-check-label ms-2" htmlFor={day}>
+                      {day}
+                    </label>
+                  </div>
                 </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex  align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Tuesday"
-                    checked={days.Tuesday}
-                    onChange={() => handleDayChange("Tuesday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Tuesday">
-                    Tuesday
-                  </label>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex justify-content-start align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Wednesday"
-                    checked={days.Wednesday}
-                    onChange={() => handleDayChange("Wednesday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Wednesday">
-                    Wednesday
-                  </label>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex justify-content-start align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Thursday"
-                    checked={days.Thursday}
-                    onChange={() => handleDayChange("Thursday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Thursday">
-                    Thursday
-                  </label>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex justify-content-start align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Friday"
-                    checked={days.Friday}
-                    onChange={() => handleDayChange("Friday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Friday">
-                    Friday
-                  </label>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex justify-content-start align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Saturday"
-                    checked={days.Saturday}
-                    onChange={() => handleDayChange("Saturday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Saturday">
-                    Saturday
-                  </label>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex justify-content-start align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Sunday"
-                    checked={days.Sunday}
-                    onChange={() => handleDayChange("Sunday")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Sunday">
-                    Sunday
-                  </label>
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="form-check d-flex justify-content-start align-items-center">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="Weekdays"
-                    checked={days.Weekdays}
-                    onChange={() => handleDayChange("Weekdays")}
-                  />
-                  <label className="form-check-label ms-2" htmlFor="Weekdays">
-                    Weekdays
-                  </label>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 

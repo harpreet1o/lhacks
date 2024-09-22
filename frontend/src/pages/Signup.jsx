@@ -1,14 +1,13 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
+
 import Header from '../components/Header';
 
 const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate(); 
-  const { setUser } = useContext(UserContext);
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -18,9 +17,9 @@ const Signup = () => {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:3000/register', formData, { withCredentials: true });
-      setUser({ username: res.data.user.name });
-      navigate('/setup');
+      const res = await axios.post('http://localhost:3000/signup', formData, { withCredentials: true });
+      console.log(res);
+      navigate('/login');
       
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred. Please try again.');

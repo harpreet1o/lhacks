@@ -6,7 +6,7 @@ import Header from '../components/Header';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const { setUser } = useContext(UserContext);
+  const { fetchUser } = useContext(UserContext);
   const [error, setError] = useState('');
   const navigate = useNavigate(); 
 
@@ -19,7 +19,9 @@ const Login = () => {
     setError('');
     try {
       const res = await axios.post('http://localhost:3000/login', formData, { withCredentials: true });
-      setUser({ username: res.data.user.name });
+      console.log(res);
+      fetchUser();
+
       navigate('/'); // Navigate to the Home page after successful login
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred. Please try again.');

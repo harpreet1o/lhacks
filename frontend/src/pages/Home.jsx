@@ -1,6 +1,19 @@
 import Header from "../components/Header";
+import { useContext, useEffect } from "react";
+import { UserContext } from '../context/UserContext';
+import axios from "axios";
+
 
 function Home() {
+  const { fetchUser,user } = useContext(UserContext);
+  useEffect(()=>{
+    if(!user)
+  fetchUser();
+  })
+  const generate=(async()=>{
+    const response = await axios.post("http://localhost:3000/gettingWorkout", {}, { withCredentials: true });
+    console.log(response);
+  })
   return (
     <div className="intro">
       <Header />
@@ -15,7 +28,7 @@ function Home() {
 
       <button 
 
-        className="btn btn-success btn-lg"
+        className="btn btn-success btn-lg" onClick={generate}
 
       
       >Get started</button> 
