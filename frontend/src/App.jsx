@@ -1,13 +1,19 @@
 import './App.css'
-import Login from './pages/Login'
+import Home from './pages/Home'
+import Workout from './pages/Workout'
 import Setup from './pages/Setup'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 function App() {
 
   return (
-    <div className="border border-success p-4">
-     <Setup />
-    </div>
+    <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/workout" element={<Workout />} />
+          <Route path="/setup" element={<Setup />} />
+        </Routes>
+    </Router>
   )
 }
 
