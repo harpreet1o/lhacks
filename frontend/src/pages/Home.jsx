@@ -5,14 +5,15 @@ import axios from "axios";
 
 
 function Home() {
-  const { fetchUser,user } = useContext(UserContext);
-  useEffect(()=>{
-    if(!user)
-  fetchUser();
-  })
+  const { fetchUser,user,workout } = useContext(UserContext);
+  useEffect(() => {
+    if (!user) {
+      fetchUser();
+    }
+  });
+  console.log(workout);
   const generate=(async()=>{
-    const response = await axios.post("http://localhost:3000/gettingWorkout", {}, { withCredentials: true });
-    console.log(response);
+    await axios.post("http://localhost:3000/gettingWorkout", {}, { withCredentials: true });
   })
   return (
     <div className="intro">

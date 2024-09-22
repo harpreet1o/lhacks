@@ -1,7 +1,13 @@
 import Header from "../components/Header";
 import ExerciseCard from "../components/Exercise";
+import { UserContext } from "../context/UserContext";
+import { useEffect, useState,useContext } from "react";
 
 function Workout() {
+  const [workoutV,setWorkout]=useState(null);
+  const { workout } = useContext(UserContext);
+  setWorkout(workout);
+  console.log(workoutV);
   return (
     <div className="">
       <Header />
