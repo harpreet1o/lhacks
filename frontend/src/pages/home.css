@@ -1,0 +1,33 @@
+.intro {
+    background-image: url('../assets/ambitious-studio-rick-barrett-g_bglWB48JA-unsplash.jpg'); /* Adjust path */
+    background-size: cover; /* Make the image cover the entire area */
+    background-position: center; /* Center the image */
+    background-blend-mode: lighten;
+    height: 100vh; /* Full height of the viewport */
+    color: white; /* Change text color for contrast */
+    display: flex; /* Center content */
+    flex-direction: column; /* Stack elements */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+  }
+
+  .intro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    filter: blur(150%); /* Adjust blur amount as needed */
+    z-index: 1; /* Ensure the overlay is above the background */
+}
+
+.bg-gray {
+    background: rgba(3, 84, 3, 0.5); /* Green overlay with 50% opacity */
+}
+.intro > * {
+    position: relative; /* Ensure content is above the overlay */
+    z-index: 2;
+}
+
+

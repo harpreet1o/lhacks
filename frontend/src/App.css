@@ -1,5 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+h1{
+    font-family: 'Itim', cursive;
+    font-size: 3rem;
+    text-align: center;
+}
+
+.intro{
+  font-family: 'Itim', cursive;
+  text-align: center;
+}
+
+.strip{
+  height: 15px; 
+  width: 100%;
+}
+
+#header{
+  width: 100%;
+}
+
 #root {
-  max-width: 1280px;
+  min-width: 400px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -18,25 +40,34 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
+}
+
+/* CSS to handle the image and the green filter */
+.image-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.green-filter {
+  filter: brightness(70%) sepia(30%) hue-rotate(90deg);
+}
+
+/* Media query for screens wider than 600px */
+@media (min-width: 600px) {
+  .image-container {
+    display: block;
+  }
 }
