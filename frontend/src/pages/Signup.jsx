@@ -50,10 +50,6 @@ const Signup = () => {
           <input type="password" name="password" className="form-control" onChange={onChange} required />
         </div>
         
-        <div className='my-3'>
-          <a href="/login" className='text-secondary fst-italic'>Already have an account? Login here! </a>
-        </div>
-        
         <button type="submit" className="btn btn-success ">Sign up</button>
       
       </form>

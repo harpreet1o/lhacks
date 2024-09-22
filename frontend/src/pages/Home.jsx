@@ -1,40 +1,37 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { UserContext } from '../context/UserContext';
-import axios from "axios";
-
 
 function Home() {
+
+  const navigate = useNavigate(); 
+
   const { fetchUser,user } = useContext(UserContext);
   useEffect(()=>{
     if(!user)
   fetchUser();
   })
-  const generate=(async()=>{
-    const response = await axios.post("http://localhost:3000/gettingWorkout", {}, { withCredentials: true });
-    console.log(response);
-  })
+
   return (
-    <div className="intro">
+    <div className="intro ">
       <Header />
       
-
-      <p>Your personal companion</p>
-      <p>Get custom workout plans tailored to your goals and</p>
-      <p>schedule. Whether you have a few minutes or an </p>
-      <p>hour, we’ll help you crush your fitness goals!</p>
-      <b></b>
-      <p>Answer a few quick questions to get started!</p>
-
+      <div className="text-wrap mt-3 w-50 border border-secondary rounded p-3 fs-5 lh-lg">
+      <em className="text-success fw-bolder">Easy Fit</em> is your personal companion
+      Get custom workout plans tailored to your goals and
+      schedule, we’ll help you crush your fitness goals!
+      <br/>
+      Only answer a few quick questions to get started!
+      <br/>
       <button 
+        className="btn btn-success" onClick={navigate('/signup')}     
+      >Get started</button> &nbsp;&nbsp;
 
-        className="btn btn-success btn-lg" onClick={generate}
+      <span >to build your perfect workout</span>
+      </div>
 
-      
-      >Get started</button> 
-
-      <span id="to">to build your perfect workout</span>
       <Footer />
     </div>
     );

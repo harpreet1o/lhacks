@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import logo from "../assets/logo.svg";
 import settingsIcon from "../assets/gear.svg";
+import dumbbellIcon from "../assets/dumbbell.svg";
 
 const Header = () => {
   const navigate = useNavigate(); 
@@ -34,18 +35,23 @@ const Header = () => {
   }, [user]);
 
   return (
-    <div>
+    <div id="header">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <a className="px-2" onClick={navigate('/Setup')}> 
+        <div className="px-2 d-flex">
+        <a onClick={() => navigate('/setup')}> 
           <img src={settingsIcon} alt="Settings icon" className=" img-fluid icon" />
         </a>
-        <a>
-          <h1 className="fw-bold text-success" onClick={navigate('/')}>
+        <p>&nbsp;&nbsp;</p>
+        <a onClick={() => navigate('/workout')}> 
+          <img src={dumbbellIcon} alt="Dumbbell icon" className=" img-fluid icon" />
+        </a>
+        </div>
+        <a onClick={() => navigate('/')}>
+          <h1 className="fw-bold text-success" >
             <img src={logo} alt="Running person icon" className="px-2" />
             Easy Fit
           </h1>
         </a>
-        {(user)?<p>Hi, {user}</p>:<></>}
         
         <button className={"btn " + btnColor} onClick={handleClick}>
           {btnText}

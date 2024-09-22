@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios"; // Import axios
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { UserContext } from "../context/UserContext";
 
 function Setup() {
   const [age, setAge] = useState(30);
